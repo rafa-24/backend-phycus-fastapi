@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Has sido invitado a una tienda</title>
+</head>
+
+<body style="margin:0;padding:40px 20px;background-color:#f4f6f9;font-family:Arial, Helvetica, sans-serif;">
+
+    <table align="center" width="600" cellpadding="0" cellspacing="0"
+        style="background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e5e7eb;">
+
+        <!-- Encabezado -->
+        <tr>
+            <td style="background:#1F2937;padding:32px;text-align:center;">
+
+                <h1 style="margin:0;color:#ffffff;font-size:30px;font-weight:bold;">
+                    Phycus
+                </h1>
+
+            </td>
+        </tr>
+
+        <!-- Contenido -->
+        <tr>
+            <td style="padding:40px;">
+
+                <h2 style="margin-top:0;color:#111827;font-size:26px;">
+                    ¡Hola, {{ name }}!
+                </h2>
+
+                <p style="font-size:16px;color:#4B5563;line-height:28px;">
+                    Has sido registrado como <strong>colaborador</strong> en la tienda {{ storeName }}
+                </p>
+
+                <p style="font-size:16px;color:#4B5563;line-height:28px;">
+                    Para facilitar tu primer acceso, se ha generado una contraseña temporal.
+                </p>
+
+                <!-- Credenciales -->
+                <table width="100%" cellpadding="0" cellspacing="0"
+                    style="background:#F9FAFB;border:1px solid #E5E7EB;border-radius:8px;padding:20px;margin:30px 0;">
+
+                    <tr>
+                        <td style="padding:8px 0;font-size:15px;color:#374151;">
+                            <strong>Correo electrónico:</strong><br>
+                            {{ email }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding:8px 0;font-size:15px;color:#374151;">
+                            <strong>Contraseña temporal:</strong><br>
+                            <span style="font-size:18px;font-weight:bold;color:#111827;">
+                                {{ password }}
+                            </span>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <div style="background:#FEF3C7;border-left:4px solid #F59E0B;padding:18px;border-radius:6px;margin-bottom:30px;">
+                    <p style="margin:0;font-size:15px;color:#92400E;line-height:24px;">
+                        <strong>Importante:</strong> Por motivos de seguridad, esta contraseña es temporal.
+                        Antes de utilizar la plataforma, debes restablecer tu contraseña desde la opción
+                        <strong>"¿Olvidaste tu contraseña?"</strong> en la pantalla de inicio de sesión.
+                    </p>
+                </div>
+
+                <p style="font-size:16px;color:#4B5563;line-height:28px;">
+                    Una vez establezcas una nueva contraseña, podrás acceder normalmente a tu cuenta y comenzar a utilizar la plataforma.
+                </p>
+
+                <div style="text-align:center;margin-top:35px;">
+                    <a href="{{ loginUrl }}"
+                        style="display:inline-block;background:#1F2937;color:#ffffff;text-decoration:none;padding:14px 30px;border-radius:8px;font-size:16px;font-weight:bold;">
+                        Iniciar sesión
+                    </a>
+                </div>
+
+                <p style="margin-top:35px;font-size:14px;color:#6B7280;line-height:24px;">
+                    Si no esperabas este correo o consideras que se trata de un error,
+                    comunícate con el administrador de la tienda.
+                </p>
+
+            </td>
+        </tr>
+
+        <!-- Pie -->
+        <tr>
+            <td style="padding:24px;text-align:center;background:#F9FAFB;border-top:1px solid #E5E7EB;">
+
+                <p style="margin:0;font-size:13px;color:#9CA3AF;">
+                    © Phycus · Todos los derechos reservados
+                </p>
+
+            </td>
+        </tr>
+
+    </table>
+
+</body>
+
+</html>

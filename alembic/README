@@ -1,0 +1,45 @@
+# Migraciones con Alembic
+
+Este proyecto usa Alembic para aplicar cambios en la base de datos cuando modificas los modelos SQLModel.
+
+## Flujo recomendado
+
+1. Modifica el modelo en `app/modules/**/models/` o `app/modules/**/model/`.
+2. Importa el modelo en `app/database/models.py` si es una tabla nueva.
+3. Genera la migración:
+
+```bash
+.venv\Scripts\alembic revision --autogenerate -m "describe_el_cambio"
+```
+
+4. Revisa el archivo creado en `alembic/versions/`.
+5. Aplica la migración:
+
+```bash
+.venv\Scripts\alembic upgrade head
+```
+
+## Comandos útiles
+
+```bash
+# Ver versión actual
+.venv\Scripts\alembic current
+
+# Ver historial
+.venv\Scripts\alembic history
+
+# Revertir la última migración
+.venv\Scripts\alembic downgrade -1
+```
+
+## Al iniciar la API
+
+`app/database/init_db.py` ejecuta:
+
+1. `create_all()` para crear tablas que aún no existen.
+2. `alembic upgrade head` para aplicar cambios incrementales (columnas nuevas, índices, FK).
+
+## Notas para SQLite
+
+- Alembic usa `render_as_batch=True` para soportar `ALTER TABLE` en SQLite.
+- Siempre revisa las migraciones autogeneradas antes de aplicarlas.
