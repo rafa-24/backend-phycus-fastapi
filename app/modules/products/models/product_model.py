@@ -17,3 +17,7 @@ class Products(SQLModel, table=True):
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     stock: int | None = Field(default=None, nullable=True)
     discount_activate: bool | None = Field(default=None, nullable=True)
+    # Identificadores Siigo (id GUID + code) y EAN/código de barras
+    siigo_id: Optional[str] = Field(default=None, max_length=80, index=True)
+    siigo_code: Optional[str] = Field(default=None, max_length=60, index=True)
+    ean: Optional[str] = Field(default=None, max_length=80)

@@ -15,6 +15,9 @@ class ProductCreate(SQLModel):
     is_active: bool = True
     stock: Optional[int] = None
     discount_activate: Optional[bool] = None
+    siigo_id: Optional[str] = None
+    siigo_code: Optional[str] = None
+    ean: Optional[str] = None
 
 
 class ProductUpdate(SQLModel):
@@ -26,6 +29,9 @@ class ProductUpdate(SQLModel):
     is_active: Optional[bool] = None
     stock: Optional[int] = None
     discount_activate: Optional[bool] = None
+    siigo_id: Optional[str] = None
+    siigo_code: Optional[str] = None
+    ean: Optional[str] = None
 
 
 class ProductResponse(SQLModel):
@@ -40,6 +46,9 @@ class ProductResponse(SQLModel):
     created_at: datetime
     stock: Optional[int] = None
     discount_activate: Optional[bool] = None
+    siigo_id: Optional[str] = None
+    siigo_code: Optional[str] = None
+    ean: Optional[str] = None
 
 
 class ProductImportSkippedRow(SQLModel):

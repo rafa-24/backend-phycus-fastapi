@@ -16,6 +16,12 @@ from app.modules.role.controller.role_controller import role
 from app.modules.tariffs.controller.tariff_controller import tariff
 from app.modules.shared.exceptions.exception_handlers import register_exception_handlers
 from app.modules.ranking.controller.ranking_controller import ranking
+from app.modules.integrations.payments.bold.controller.bold_controller import bold
+from app.modules.orders.controller.order_controller import order
+from app.modules.integrations.siigo.controller.sigo_detail_controller import siigo
+from app.modules.analytics.controller.analytics_controller import analytics
+
+
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -78,3 +84,7 @@ app.include_router(discount)
 app.include_router(role)
 app.include_router(ranking)
 app.include_router(tariff)
+app.include_router(bold)
+app.include_router(order)
+app.include_router(siigo)
+app.include_router(analytics)

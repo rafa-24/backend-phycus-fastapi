@@ -101,6 +101,11 @@ class ProductService:
             price=payload.price,
             image_url=payload.image_url,
             is_active=payload.is_active,
+            stock=payload.stock,
+            discount_activate=payload.discount_activate,
+            siigo_id=payload.siigo_id,
+            siigo_code=payload.siigo_code,
+            ean=payload.ean,
         )
 
         created_product = self.product_repository.create(session, new_product)

@@ -23,6 +23,26 @@ class ProductRepository:
         statement = select(Products).where(Products.store_id == store_id)
         return session.exec(statement).all()
 
+    def get_by_siigo_id(
+        self, session: Session, store_id: int, siigo_id: str
+    ) -> Products | None:
+        statement = (
+            select(Products)
+            .where(Products.store_id == store_id)
+            .where(Products.siigo_id == siigo_id)
+        )
+        return session.exec(statement).first()
+
+    def get_by_siigo_code(
+        self, session: Session, store_id: int, siigo_code: str
+    ) -> Products | None:
+        statement = (
+            select(Products)
+            .where(Products.store_id == store_id)
+            .where(Products.siigo_code == siigo_code)
+        )
+        return session.exec(statement).first()
+
     def get_by_category_id(
         self, session: Session, category_id: int
     ) -> list[Products]:
