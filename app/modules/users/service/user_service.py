@@ -48,6 +48,8 @@ class UserService:
         # verificar si el usuario se creo
         if created_user.id is None:
             raise InternalServerException("No fue posible crear usuario")
+
+        # Crear una tienda y asociarla a este usuario
         
         # enviar email
         html = self.email_service.render_template(

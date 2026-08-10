@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from fastapi.concurrency import run_in_threadpool
 from app.database.init_db import create_db
 from app.modules.helpers.analyze_images import rank_images
 from app.modules.helpers.search_images_products import search_images_products
@@ -46,32 +45,15 @@ app.add_middleware(
 register_exception_handlers(app)
 
 @app.on_event("startup")
-async def startup():
+def startup():
     create_db()
 
 @app.get("/")
-async def root():
-    try:
-        urls = await run_in_threadpool(
-            search_images_products,
-            "Buscar imagen del producto Mini Bites Vainilla identificado con codigo ean: 500645",
-            max_results= 3
-        )
+def root():
+    return {
+        "message": 'Bienvenido a phycus V.1.0.1'
+    }
 
-        ranking = rank_images(
-            name="Mini Bites Vainilla",
-            ean_code="500645",
-            image_urls=urls
-        )
-
-        return {
-            "ranking": ranking
-        }
-
-    except Exception as e:
-        import traceback
-        traceback.print_exc()
-        raise e
 
 # incluir rutas en mi aplicacion
 app.include_router(user)
