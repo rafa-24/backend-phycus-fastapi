@@ -1,7 +1,10 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "phycus"
-version = "0.0.2"
-requires-python = ">=3.11"
+version = "0.1.0"
 dependencies = [
     "fastapi[standard]>=0.139.0",
     "sqlmodel>=0.0.39",
@@ -13,8 +16,8 @@ dependencies = [
     "openpyxl>=3.1.5",
     "python-multipart>=0.0.32",
     "alembic>=1.18.5",
-    "ddgs>=9.14.0",
+    "ddgs>=9.14.0"
 ]
 
-[tool.fastapi]
-entrypoint = "app.main:app"
+[tool.setuptools.packages.find]
+include = ["app*"]
