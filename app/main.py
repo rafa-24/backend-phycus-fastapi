@@ -31,7 +31,7 @@ app = FastAPI(title="Phycus API", version="0.0.2")
 origins = [
     "http://192.168.10.17:3000",
     "http://localhost:3000",
-    "https://phycus.netlify.app"
+    "https://phycus-frontend-olive.vercel.app" # frontend de prodccuin vercel
 ]
 
 # metodos permitidos
