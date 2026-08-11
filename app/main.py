@@ -30,7 +30,8 @@ app = FastAPI(title="Phycus API", version="0.0.2")
 # Defino las rutas que pueden enviar peticiones a phycus
 origins = [
     "http://192.168.10.17:3000",
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "https://phycus.netlify.app/"
 ]
 
 # metodos permitidos
