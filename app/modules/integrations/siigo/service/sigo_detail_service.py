@@ -403,12 +403,18 @@ class SiigoService:
         text = str(barcode).strip()
         return text[:80] if text else None
 
+
+# Refcatorizar
     async def _fetch_all_siigo_products(
         self, session: Session, detail: SiigoDetail
     ) -> list[dict[str, Any]]:
         page = 1
         page_size = 100
         results: list[dict[str, Any]] = []
+
+        # Se puede manejar mejor la peticion en siigo
+
+        # y se pueden guardar de manera mas optima los productos
 
         while True:
             data = await self._siigo_request(

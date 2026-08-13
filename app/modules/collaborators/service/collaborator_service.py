@@ -24,6 +24,10 @@ from app.modules.users.models.user_model import Users
 from app.modules.users.repository.user_repository import UserRepository
 from app.modules.users.service.user_service import UserService
 
+from fastapi import BackgroundTasks
+
+
+
 
 class CollaboratorService:
 
@@ -64,7 +68,37 @@ class CollaboratorService:
         last_name = parts[1] if len(parts) > 1 else None
         return first_name, last_name
 
-    def create(self, session: Session, payload: CollaboratorCreate):
+    def _send_invitation_email(self, email: str, full_name: str, store_name: str, password: str):
+            try:
+
+                print(f'Iniciando envio de correo a {email}')
+
+                html = self.email_service.render_template(
+                    "invitation_collaborator.html",
+                    {
+                        "name": full_name,
+                        "storeName": store_name,
+                        "email": email,
+                        "password": password,
+                        "loginUrl": "https://phycus-frontend-olive.vercel.app/login"
+                    }
+                )
+
+                print('html cargado correctramente')
+    
+                self.email_service.send_email(
+                    to_email= email,
+                    subject="Tu acceso a Phycus ha sido creado",
+                    html_content= html
+                )
+    
+                print(f"Correo de invitacion enviado a {email}")
+    
+            except Exception as e:
+                print(f'Error critico, no se puedo enviar correo electronico a {email}. Motivo: {e}')
+    
+
+    def create(self, session: Session, payload: CollaboratorCreate, background_task: BackgroundTasks):
         store = self._get_store_or_raise(session, payload.store_id)
 
         if not payload.email or not payload.email.strip():
@@ -106,7 +140,8 @@ class CollaboratorService:
         if created.id is None:
             raise InternalServerException("No fue posible crear el colaborador.")
 
-        html = self.email_service.render_template(
+        '''
+        html = self.email_service.render_template( # cambiar esto por una background task
             "invitation_collaborator.html",
             {
                 "name": payload.full_name,
@@ -117,11 +152,23 @@ class CollaboratorService:
             },
         )
 
-        self.email_service.send_email(
-            to_email=email,
-            subject="Tu acceso a Phycus ha sido creado",
-            html_content=html,
-        )
+        
+         self.email_service.send_email(
+                    to_email=email,
+                    subject="Tu acceso a Phycus ha sido creado",
+                    html_content=html,
+                )           
+        '''     
+
+        # Se ejecuta en segundo plano y el usuario puede continuar usando la app
+
+        background_task.add_task(
+            self._send_invitation_email,
+            email= payload.email,
+            full_name= new_collaborator.full_name,
+            store_name= store.name,
+            password= password_collaborator
+        )        
 
         return ApiResponse(
             message="El colaborador se creó de manera exitosa.",
@@ -210,3 +257,5 @@ class CollaboratorService:
             message="Colaborador obtenido correctamente.",
             data=CollaboratorResponse.model_validate(collaborator),
         )
+
+
