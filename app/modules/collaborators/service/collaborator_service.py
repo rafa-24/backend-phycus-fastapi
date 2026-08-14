@@ -228,13 +228,13 @@ class CollaboratorService:
     def delete(self, session: Session, collaborator_id: int):
         collaborator = self._get_collaborator_or_raise(session, collaborator_id)
 
+        # Se elimina primero de la tabla colaboradores
+        self.collaborator_repository.delete(session, collaborator)
+
         # eliminar de la tabla users
         deleted_user = self.user_service.delete_user_by_email(session, collaborator.email)
 
         print(f"delete_user ${deleted_user}")
-
-
-        self.collaborator_repository.delete(session, collaborator)
 
         return ApiResponse(
             message="El colaborador se eliminó de manera exitosa.",
