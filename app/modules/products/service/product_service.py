@@ -187,13 +187,17 @@ class ProductService:
 
     def delete(self, session: Session, product_id: int):
         product = self._get_product_or_raise(session, product_id)
-
-        self.ranking_repository.delete_by_product_id(session, product_id)
-        self.product_repository.delete(session, product)
-
+        try:
+            # llamada al repositorio para eliminar descuentos, ordenes y rankings asociados al producto
+            self.product_repository.delete(session, product)
+            session.commit()
+        except Exception as e:
+            session.rollback()
+            raise InternalServerException(f"No fue posible eliminar el producto: {str(e)}")
+        
         return ApiResponse(
-            message="El producto se eliminó de manera exitosa.",
-            data=ProductResponse.model_validate(product),
+            message="El producto se eliminó de manera exitosa.", 
+            data=ProductResponse.model_validate(product)
         )
 
     def export_products_excel(self, session: Session, store_id: int):

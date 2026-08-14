@@ -1,6 +1,9 @@
 from sqlmodel import Session, select
 
 from app.modules.products.models.product_model import Products
+from app.modules.discounts.models.discount_model import Discounts
+from app.modules.orders.models.order_model import OrderItems
+from app.modules.ranking.models.ranking_products import Ranking
 
 
 class ProductRepository:
@@ -56,5 +59,14 @@ class ProductRepository:
         return product
 
     def delete(self, session: Session, product: Products) -> None:
+        # Eliminar descuentos asociados al producto
+        session.query(Discounts).filter(Discounts.product_id == product.id).delete()
+
+        # Eliminar ordenes asociadas al producto
+        session.query(OrderItems).filter(OrderItems.product_id == product.id).delete()
+
+        # Eliminar rankinks asociados al producto
+        session.query(Ranking).filter(Ranking.product_id == product.id).delete()
+
+        # eliminar el producto
         session.delete(product)
-        session.commit()
