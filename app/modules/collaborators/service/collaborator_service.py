@@ -26,9 +26,6 @@ from app.modules.users.service.user_service import UserService
 
 from fastapi import BackgroundTasks
 
-
-
-
 class CollaboratorService:
 
     def __init__(self):
@@ -86,7 +83,7 @@ class CollaboratorService:
 
                 print('html cargado correctramente')
     
-                self.email_service.send_email(
+                self.email_service.send_email_mailgum(
                     to_email= email,
                     subject="Tu acceso a Phycus ha sido creado",
                     html_content= html
@@ -161,7 +158,6 @@ class CollaboratorService:
         '''     
 
         # Se ejecuta en segundo plano y el usuario puede continuar usando la app
-
         background_task.add_task(
             self._send_invitation_email,
             email= payload.email,
